@@ -1,26 +1,24 @@
 ﻿/*
  * Copyright Company
- * author
- * date
+ * Author
+ * Date
  */
+
 
 class Program
 {
-    // Single line cmt
-    // Anther single line cmt
+    // Single line comment
+    // Author single line comment
     /*
-     * Multi line cmt
-     * ignored
+     * Multi line cmment
+       ignored
      */
+
     static void Main()
     {
-        //int x = "Bob"; --> will show the eror message
+        Console.WriteLine("Enter your name: ");
+        string nanme = Console.ReadLine();
 
-        Console.WriteLine("Enter right name: ");
-        string name = Console.ReadLine();
-
-        Console.WriteLine("Hello World " + name);
-   
-
+        Console.WriteLine("Hello World " + nanme);
     }
 }

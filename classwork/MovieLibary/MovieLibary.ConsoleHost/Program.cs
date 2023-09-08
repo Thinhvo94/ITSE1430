@@ -450,9 +450,9 @@ string ReadString (string message, bool isRequired )    //  funct-decl
         */
         // we can combine 2 statement
 
-        if (!isRequired || value != "") //--> beacuse we add more code for no empty string
-        //if (!isRequired || )
-            return value;
+        //if (!isRequired || value != "") //--> beacuse we add more code for no empty string
+        if (!isRequired || !String.IsNullOrEmpty(value))
+                return value;
 
 
         Console.WriteLine("Value is required");

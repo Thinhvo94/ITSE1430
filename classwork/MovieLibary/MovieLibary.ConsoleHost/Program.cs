@@ -86,10 +86,29 @@
  *   --> if the statement is clear, you can use "var" (only local variable, not up level)
  *  
  *  
- *  -------------------------------------------------------------------------------------------------------------------
+ *  ------------------------------------------------------09-07-23-------------------------------------------------------------
+ *  using for  menu point
+ *  switch (Et)
+ *  {
+ *   {case Ect : S} --> it must be unit statement,
+ *   [default : S]
+ *  };
+ *  --> No fallthrough --> all crosses have break
+ *  each case has only 1 statement, not include break statement
+ *  if we have multi statements in case, use "{}"
+ *  Fallthough allow: unless preprious --> case is empty (if 2 cases or more have the same statement, we can leave empty the statement, and keep the last case has stament)
  *  
+ *  ReadKey: retun the complex object and doesnt care ab key
  *  
+ *  null is nothing
+ *  
+ * \n: get a new line
+ * \t: tab
+ * Escape character:
+ *      someValue = "Hello\"Bob";
+ *      string filePath = "C:\\Windows\\temp"; or filePath = @"C:\Windows\temp"; --> verbatim string
  */
+
 
 
 
@@ -104,13 +123,120 @@ decimal budget = 125.45M; /// decimal can not storage samething like double. we 
 bool isBlackAndWhite = false;
 
 
-//Get movie details and display
-GetMovie();
-DisplayMovie();
+// Entry Point
+
+// 2 option to create Menu point 
+/* Ver1: Using If - else if   (if we use "IF", it needs to check each condition until it find the result. It u type wrong, it 'll break your app
+var done = false;
+do { 
+    int command = DisplayMenu();
+    if (command ==1)
+        AddMovie();
+    else if (command == 2)
+        EditMovie();
+    else if (command == 3)
+        DeleteMovie();
+    else if (command == 4)
+        ViewMovie();
+    else if (command == 0)
+        done = true;
+} while (!done);
+*/
+
+// Ver2: using switch
+var done = false;
+do
+{
+    int command = DisplayMenu();
+    switch (DisplayMenu())
+    {
+        case 1: AddMovie(); break;
+        case 2: EditMovie(); break;
+        case 3: DeleteMovie(); break;
+        case 4: ViewMovie(); break;
+        case 0:
+        {
+            done = true;
+            break;
+        }
+
+        default: Console.WriteLine("Unknow option"); break;
+
+    }
+} while (!done);
+
+    /*Get movie details and display (After you create Main, you can delete poit 
+    AddMovie();
+    ViewMovie();
+    */
+
+int DisplayMenu ()
+{
+    Console.WriteLine("-------------");
+    Console.WriteLine("A)dd Movie");
+    Console.WriteLine("E)dit Movie");
+    Console.WriteLine("D)ellete Movie");
+    Console.WriteLine("V)iew Movie");
+    Console.WriteLine("Q)uit");
+
+   do
+   {
+            /*
+        var input = Console.ReadLine();
+        if (input == "A" || input == "a")
+            return 1;
+        else if (input == "E" || input == "e")
+            return 2;
+        else if (input == "D" || input == "d")
+            return 3;
+        else if (input == "V" || input == "v")
+            return 4;
+        else if (input == "Q" || input == "q")
+            return 0;
+            */
+
+           /* switch (Console.ReadLine())
+            {
+                case "A": //return 1;
+                case "a": return 1;
+
+                case "E": //return 2;
+                case "e": return 2;
+
+                case "D": //return 3;
+                case "d": return 3;
+
+                case "V": //return 4;
+                case "v": return 4;
+
+                case "Q": //return 0;
+                case "q": return 0;
+
+            };*/
+
+        switch (Console.ReadKey(true).Key)
+        {
+               
+            case ConsoleKey.A: return 1;
+
+            case ConsoleKey.E: return 2;
+
+            
+            case ConsoleKey.D: return 3;
+
+           
+            case ConsoleKey.V: return 4;
+
+            
+            case ConsoleKey.Q: return 0;
+        };
+    } while (true);
+}
+
 
 
 // Functions
-void GetMovie ()
+void AddMovie ()
 {
     //Get the title
     //Console.WriteLine("Enter a title: ");
@@ -131,21 +257,41 @@ void GetMovie ()
     releaseYear = ReadInt("Enter the release year: ", 1900);
 
     genre = ReadString("Enter a genre: ", false);
-    rating = ReadString("Enter a rating: ", false);
+    rating = ReadRating("Enter a rating: ");
 
     isBlackAndWhite = ReadBoolean("Black and White (Y/N)? "); 
 }
 
+void EditMovie () 
+{
+    Console.WriteLine("Not implemented yet");
+}
+
+void DeleteMovie () 
+    {
+        if (!Confirm("Are you sure you want to delete the movie (Y/N)?"))
+            return;
+
+        Console.WriteLine("Not implemmented yet");
+    }
+
 
 //Display the movie details
-void DisplayMovie ()
+void ViewMovie ()
 {
+    /*
     Console.WriteLine();
     Console.WriteLine("-*---------------*-");
-    Console.WriteLine(title);
+    */
+    Console.WriteLine("\n-*----------------*-\n");
   
+
+    Console.WriteLine(title);
+
     // Run Length: ## mins
-    Console.WriteLine("Run Length: " + length + " mins");
+    //Console.WriteLine("Run Length: " + length + " mins");
+    Console.WriteLine("Run Length: " + length.ToString() + " mins"); //every Expression supports ToString()
+
 
     // Released yyy
     Console.WriteLine("Release " + releaseYear);
@@ -174,6 +320,11 @@ void DisplayMovie ()
     Console.WriteLine(decription);
 }
 
+bool Confirm (string message)
+{
+        return ReadBoolean(message);
+}
+
 /* 
  * function run in isolation
  * parameter: geting data into a function
@@ -185,16 +336,35 @@ bool ReadBoolean (string message)
 {
     Console.WriteLine(message);
 
-    //T000 Handle errors;
     while (true)
     {
-        string value = Console.ReadLine();
-        if (value == "Y" || value == "y")
-            return true;
-        else if (value == "N" || value == "n")  // value == "N" || "n"
-            return false;
+            /*string value = Console.ReadLine();
+            if (value == "Y" || value == "y")
+                return true;
+            else if (value == "N" || value == "n")  // value == "N" || "n"
+                return false;
+            */
 
-        Console.WriteLine("Please enter Y/N");
+            /*switch(Console.ReadKey())
+            {
+               case "Y"
+               case "y": return true;
+
+               case "N"
+               case "n": return false;
+            };
+            */
+            // --> upgrade code using ReadKey
+            switch (Console.ReadKey(true).Key)
+            {
+                case ConsoleKey.Y: return true;
+
+                case ConsoleKey.N: return false;
+
+
+            };
+
+            //Console.WriteLine("Please enter Y/N");
 
         /*
         if (false)
@@ -231,6 +401,37 @@ int ReadInt (string message, int minimumValue)
     while (true);
 }
 
+string ReadRating ( string message)
+{
+    Console.WriteLine(message);
+
+    do
+    {
+        string value = Console.ReadLine();
+
+        if (value == "PG")
+            return "PG";
+        else if (value == "G")
+            return "G";
+        else if (value == "PG-13")
+            return "PG-13";
+        else if (value == "R")
+            return "R";
+        //else if (value == "")  // else if (value == String.Empty
+        //else if (value == "" || value == null) --> DO NOT DO THIS
+        else if (String.IsNullOrEmpty(value))
+            return "";
+        
+        Console.WriteLine("Invalid Rating");
+    } while (true);
+
+    string emptyValue;
+    var areEqual = "" == String.Empty; //true
+    areEqual = "" == null; // value
+
+
+}
+
 string ReadString (string message, bool isRequired )    //  funct-decl
 {
     Console.WriteLine(message);
@@ -249,7 +450,8 @@ string ReadString (string message, bool isRequired )    //  funct-decl
         */
         // we can combine 2 statement
 
-        if (!isRequired || value != "")
+        if (!isRequired || value != "") //--> beacuse we add more code for no empty string
+        //if (!isRequired || )
             return value;
 
 
@@ -267,12 +469,9 @@ string ReadString (string message, bool isRequired )    //  funct-decl
     if you want to block second if, you have to add {} to create a new stament
    */
 
-    //T000: Input validation for required
-
     //return value;
     //return Console.ReadLine()  --> can you this code to replace the value
 }
-
 
 
 /*double someFloatingValue = 3.14159;
